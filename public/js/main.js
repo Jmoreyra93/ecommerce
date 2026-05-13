@@ -22,7 +22,6 @@ class Main {
         }
         else if(id == 'inicio') {
             initInicio()
-            showSlides()
             scrollEfect()
         }
         else if(id == 'nosotros') {
@@ -37,12 +36,13 @@ class Main {
         let archivo = this.getNombreArchivo(id)
 
         let plantilla = await this.ajax(archivo)
-        // Carga del código de vista (HTML) de la plantilla
         let main = document.querySelector('main')
         main.innerHTML = plantilla
 
-        // Carga del código script (JS) de la plantilla
         this.initJS(id)
+
+        // Re-render Lucide icons injected by the new view
+        if (typeof lucide !== 'undefined') lucide.createIcons()
     }
 
     async cargarPlantillas() {

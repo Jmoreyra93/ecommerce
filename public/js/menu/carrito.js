@@ -1,5 +1,13 @@
 let mostrarCarrito = false
 
+function actualizarCartBadge() {
+    const badge = document.getElementById('cart-badge')
+    if (!badge) return
+    const total = carritoController.carrito.reduce((sum, p) => sum + Number(p.cantidad || 1), 0)
+    badge.textContent = total || ''
+    badge.style.display = total ? 'flex' : 'none'
+}
+
 async function renderTablaCarrito(carrito) {
     var elemSectionCarrito = document.getElementsByClassName('section-carrito')[0]
 
@@ -31,9 +39,7 @@ function initCarrito() {
 function cerrarCarrito() {
     var elemSectionCarrito = document.getElementsByClassName('section-carrito')[0]
     elemSectionCarrito.classList.remove('section-carrito--open')
+    mostrarCarrito = false
 }
-
-
-
 
 initCarrito()

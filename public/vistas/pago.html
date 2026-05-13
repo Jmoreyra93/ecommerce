@@ -1,31 +1,83 @@
-<!--payment-->
-<section class="payment-form dark">
-    <div class="container_payment">
-        <div class="block-heading">
-            <h2>Verificación de pago</h2>
-            <p>Pago a través Mercado Pago</p>
-        </div>
-        <div class="form-payment">
-            <div class="products">
-                <h3 class="title">Resumen de compra</h3>
-                    <div class="item"></div>
-                    <div class="total">Total<span class="price" id="summary-total"></span></div>
+<!-- ═══════════════════════════════════ PAGO ══════════════════════ -->
+<!-- Este fragmento es inyectado por pago.js en .section-pago        -->
+<!-- Los elementos con ID son requeridos por pago.js                  -->
+
+<div class="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-lg">
+
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-gray-900 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
+                </svg>
             </div>
-            <div class="payment-details">
-                <div class="form-group col-sm-12">
-                    <br>
-                    <div id="button-checkout"></div>
-                    <br>
-                    <a id="go-back">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 10 10"
-                            class="chevron-left">
-                            <path fill="#009EE3" fill-rule="nonzero" id="chevron_left"
-                                d="M7.05 1.4L6.2.552 1.756 4.997l4.449 4.448.849-.848-3.6-3.6z"></path>
-                        </svg>
-                        Volver a la aplicación
-                    </a>
+            <h2 class="text-gray-900 text-2xl font-bold mb-1">Resumen de compra</h2>
+            <p class="text-gray-500 text-sm">Revisá tu pedido antes de pagar</p>
+        </div>
+
+        <!-- Order summary card -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-4">
+
+            <!-- Items list — populated by pago.js -->
+            <div class="p-6 border-b border-gray-100">
+                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Productos</p>
+                <div class="item space-y-3">
+                    <!-- JS injects: <span class="price"> y <p class="item-name"> aquí -->
                 </div>
             </div>
+
+            <!-- Total -->
+            <div class="p-6 bg-gray-50 flex items-center justify-between">
+                <span class="font-semibold text-gray-700">Total</span>
+                <span class="text-2xl font-bold text-gray-900">
+                    $ <span id="summary-total">0</span>
+                </span>
+            </div>
         </div>
+
+        <!-- MP Checkout button — injected by mercadopago.checkout() -->
+        <div class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-4">
+            <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-4">Método de pago</p>
+            <div id="button-checkout">
+                <!-- Mercado Pago button renders here -->
+            </div>
+            <p class="text-gray-400 text-xs text-center mt-3 flex items-center justify-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                Pago seguro con Mercado Pago
+            </p>
+        </div>
+
+        <!-- Back button — required by pago.js (id="go-back") -->
+        <button id="go-back"
+            class="w-full flex items-center justify-center gap-2 text-gray-500 hover:text-gray-900 text-sm font-medium py-3 transition-colors">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Volver al inicio
+        </button>
+
     </div>
-</section>
+</div>
+
+<style>
+/* Styles for JS-injected content from pago.js */
+.item .price {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.1rem;
+}
+.item .item-name {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+.item .summary-quantity {
+    font-weight: 600;
+    color: #374151;
+}
+</style>

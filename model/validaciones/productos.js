@@ -5,7 +5,7 @@ class ProductosValidation {
     static validar(producto) {
 
         const productoSchema = Joi.object({
-            nombre: Joi.string().min(3).max(20).required(),
+            nombre: Joi.string().min(3).max(80).required(),
             precio: Joi.number().required(),
             stock: Joi.number().required(),
             marca: Joi.string().required(),

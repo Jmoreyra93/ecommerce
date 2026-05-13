@@ -53,6 +53,7 @@ class CarritoController extends CarritoModel {
     
         setTimeout( async () => {
             elemSectionCarrito.classList.remove('section-carrito--visible')
+        elemSectionCarrito.classList.remove('section-carrito--open')
             console.log(preference)
             await renderPago(preference)
         },0)

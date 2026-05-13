@@ -1,2 +1,13 @@
+# Secrets
 .env
-node_modules
+
+# Dependencies
+node_modules/
+
+# Runtime data files
+productos.dat
+carrito.dat
+
+# Uploaded images (generated at runtime — not part of source)
+public/uploads/*
+!public/uploads/.gitkeep

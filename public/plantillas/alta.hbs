@@ -1,43 +1,81 @@
-{{#if productos.length }}
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Precio</th>
-            <th>Stock</th>
-            <th>Marca</th>
-            <th>Categoria</th>
-            <th>Detalles</th>
-            <th>Foto</th>
-            <th>Envio</th>
-            <th>Acción</th>
-        </tr>
-        {{#each productos}}
-            <tr>
-                <td>{{nombre}}</td>
-                <td>{{precio}}</td>
-                <td>{{stock}}</td>
-                <td>{{marca}}</td>
-                <td>{{categoria}}</td>
-                <td>{{detalles}}</td>
-                <td>
-                    <img style="display:block; margin: 0 auto;" src="{{foto}}" width="50" alt="{{nombre}}"> 
+{{#if productos.length}}
+<div class="overflow-x-auto">
+    <table class="w-full text-sm">
+        <thead>
+            <tr class="border-b border-gray-100">
+                <th class="text-left text-xs font-semibold text-gray-400 uppercase tracking-wider pb-3 pr-4">Producto</th>
+                <th class="text-right text-xs font-semibold text-gray-400 uppercase tracking-wider pb-3 pr-4">Precio</th>
+                <th class="text-right text-xs font-semibold text-gray-400 uppercase tracking-wider pb-3 pr-4">Stock</th>
+                <th class="text-right text-xs font-semibold text-gray-400 uppercase tracking-wider pb-3">Acciones</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-50">
+            {{#each productos}}
+            <tr class="group hover:bg-gray-50 transition-colors">
+
+                <!-- Product info -->
+                <td class="py-3 pr-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-100 rounded-xl overflow-hidden shrink-0 flex items-center justify-center">
+                            {{#if foto}}
+                            <img src="{{foto}}" alt="{{nombre}}" class="w-full h-full object-cover">
+                            {{else}}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#d1d5db" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                            {{/if}}
+                        </div>
+                        <div>
+                            <p class="font-medium text-gray-900 text-xs">{{nombre}}</p>
+                            <p class="text-gray-400 text-xs">{{marca}} · {{categoria}}</p>
+                        </div>
+                    </div>
                 </td>
-                {{#if envio}}
-                    <td>Si</td>
-                {{else}}
-                    <td>No</td>
-                {{/if}}
-                <td>
-                    {{#if ../validos}}
-                        <button class="formulario__boton-actualizar" onclick="productoController.actualizarProducto('{{id}}')">Actualizar</button>
-                    {{else}}
-                        <button class="formulario__boton-actualizar" disabled onclick="productoController.actualizarProducto('{{id}}')">Actualizar</button>
-                    {{/if}}
-                    <button class="formulario__boton-borrar" onclick="productoController.borrarProducto('{{id}}')">Borrar</button>
+
+                <!-- Price -->
+                <td class="py-3 pr-4 text-right">
+                    <span class="font-semibold text-gray-900 text-xs">$ {{precio}}</span>
+                </td>
+
+                <!-- Stock -->
+                <td class="py-3 pr-4 text-right">
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-lg text-xs font-medium
+                        {{#if stock}}bg-emerald-50 text-emerald-700{{else}}bg-red-50 text-red-600{{/if}}">
+                        {{stock}}
+                    </span>
+                </td>
+
+                <!-- Actions -->
+                <td class="py-3 text-right">
+                    <div class="flex items-center justify-end gap-2">
+                        {{#if ../validos}}
+                        <button class="formulario__boton-actualizar text-xs font-medium text-gray-600 hover:text-gray-900 border border-gray-200 hover:border-gray-400 px-3 py-1.5 rounded-lg transition-all"
+                            onclick="productoController.actualizarProducto('{{id}}')">
+                            Editar
+                        </button>
+                        {{else}}
+                        <button class="formulario__boton-actualizar text-xs font-medium text-gray-300 border border-gray-100 px-3 py-1.5 rounded-lg cursor-not-allowed" disabled
+                            onclick="productoController.actualizarProducto('{{id}}')">
+                            Editar
+                        </button>
+                        {{/if}}
+                        <button class="formulario__boton-borrar text-xs font-medium text-red-500 hover:text-red-700 hover:bg-red-50 border border-transparent hover:border-red-100 px-3 py-1.5 rounded-lg transition-all"
+                            onclick="productoController.borrarProducto('{{id}}')">
+                            Borrar
+                        </button>
+                    </div>
                 </td>
             </tr>
-        {{/each}}
+            {{/each}}
+        </tbody>
     </table>
+</div>
 {{else}}
-    <h2>No se encontraron productos</h2>
+<div class="flex flex-col items-center justify-center py-16 text-center">
+    <div class="w-14 h-14 bg-gray-100 rounded-2xl flex items-center justify-center mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#9ca3af" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/>
+        </svg>
+    </div>
+    <p class="text-gray-500 font-medium text-sm">No hay productos cargados</p>
+    <p class="text-gray-400 text-xs mt-1">Completá el formulario para agregar el primero</p>
+</div>
 {{/if}}

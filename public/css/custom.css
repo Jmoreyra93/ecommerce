@@ -1,0 +1,206 @@
+/* ================================================================
+   CONNECTICUS — Custom Styles
+   Tailwind CDN handles utilities; this file handles:
+   - Dynamic class states toggled by JS
+   - CSS animations
+   - Properties Tailwind can't target (pseudo-elements, etc.)
+================================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: #fff;
+    color: #111;
+    overflow-x: hidden;
+}
+
+/* ── Navbar ────────────────────────────────────────────────── */
+.main-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(10, 10, 10, 0.96);
+    transition: background 0.3s ease, backdrop-filter 0.3s ease, box-shadow 0.3s ease;
+}
+
+.main-header.scrollfix {
+    background: rgba(0, 0, 0, 0.85) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+}
+
+/* Nav link active state — toggled by main.js */
+header nav a {
+    position: relative;
+    opacity: 0.75;
+    transition: opacity 0.2s ease;
+    text-decoration: none;
+}
+header nav a:hover { opacity: 1; }
+header nav a.active {
+    opacity: 1;
+}
+header nav a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+/* ── Cart Panel (toggled by carrito.js) ────────────────────── */
+.section-carrito {
+    position: fixed;
+    right: -520px;
+    top: 0;
+    height: 100vh;
+    width: 420px;
+    max-width: 100vw;
+    background: #fff;
+    z-index: 100;
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    box-shadow: -4px 0 40px rgba(0,0,0,0.15);
+    border-left: 1px solid #f0f0f0;
+    display: flex;
+    flex-direction: column;
+}
+
+.section-carrito.section-carrito--open { right: 0; }
+
+.section-carrito::-webkit-scrollbar { width: 4px; }
+.section-carrito::-webkit-scrollbar-track { background: #f8f8f8; }
+.section-carrito::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+
+/* ── Payment section (shown by pago.js, starts empty — no height until JS injects content) ── */
+.section-pago { padding-top: 4rem; }
+
+/* ── Product Card Image (background-image set inline by HBS) ── */
+.card__image {
+    background-size: cover;
+    background-position: center;
+    height: 220px;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+.card:hover .card__image { transform: scale(1.04); }
+
+/* ── Fade-in animation for product cards ───────────────────── */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.card { animation: fadeInUp 0.35s ease both; }
+
+/* ── Skeleton loader ───────────────────────────────────────── */
+@keyframes shimmer {
+    0%   { background-position: -800px 0; }
+    100% { background-position: 800px 0; }
+}
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 12px;
+    height: 320px;
+}
+
+/* ── Brand slider ──────────────────────────────────────────── */
+@keyframes scroll-brands {
+    0%   { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+.slide-track {
+    display: flex;
+    animation: scroll-brands 22s linear infinite;
+}
+.slide-track:hover { animation-play-state: paused; }
+
+/* ── Drag & Drop area ──────────────────────────────────────── */
+#drop-area.highlight {
+    border-color: #111 !important;
+    background: #fafafa;
+}
+
+/* ── Progress bar ──────────────────────────────────────────── */
+#progress-bar {
+    width: 100%;
+    height: 3px;
+    appearance: none;
+    border: none;
+    border-radius: 2px;
+    background: #f0f0f0;
+}
+#progress-bar::-webkit-progress-bar  { background: #f0f0f0; border-radius: 2px; }
+#progress-bar::-webkit-progress-value{ background: #111; border-radius: 2px; transition: width 0.2s; }
+
+/* ── Subscription popup (vanilla JS toggle) ────────────────── */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.55);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+.overlay.active { display: flex; }
+.popup {
+    background: #fff;
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 440px;
+    width: 90%;
+    position: relative;
+}
+
+/* ── Mobile nav (checkbox toggle) ──────────────────────────── */
+#menu { display: none; }
+.mobile-nav {
+    display: none;
+    flex-direction: column;
+    padding-bottom: 1rem;
+}
+#menu:checked ~ .mobile-nav { display: flex; }
+
+/* ── Hero gradient text ────────────────────────────────────── */
+.gradient-text {
+    background: linear-gradient(135deg, #fff 0%, #d1d5db 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Mensajes toast (fade in/out) ──────────────────────────── */
+.toast-visible { animation: fadeInUp 0.25s ease both; }
+
+/* ── Favorites heart button ─────────────────────────────────── */
+.btn-favorito { color: #9ca3af; }
+.btn-favorito:hover { color: #ef4444; }
+.btn-favorito.fav-active { color: #ef4444; }
+.btn-favorito.fav-active .fav-icon {
+    fill: #ef4444;
+    stroke: #ef4444;
+}
+
+/* ── Product filter pills ───────────────────────────────────── */
+.filter-pill {
+    background: #fff;
+    color: #6b7280;
+    border-color: #e5e7eb;
+}
+.filter-pill:hover {
+    border-color: #111;
+    color: #111;
+}
+.filter-pill.filter-active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+}

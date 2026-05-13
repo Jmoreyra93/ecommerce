@@ -23,7 +23,7 @@ app.use('/upload', routerUpload)
 console.log('-----------------------------------------')
 console.log('process.env.PORT:', process.env.PORT)
 console.log('process.env.TIPO:', process.env.TIPO)
-console.log('process.env.CNX:', process.env.CNX)
+console.log('process.env.MONGODB_URI:', process.env.MONGODB_URI)
 console.log('-----------------------------------------')
 
 

@@ -1,28 +1,17 @@
-// SDK de Mercado Pago
-import mercadopago from "mercadopago"
-import dotenv from 'dotenv'
-
-dotenv.config();
-
-// Agrega credenciales
-mercadopago.configure({
-    access_token: process.env.ACCES_TOKEN,
-});
-
-console.log('------ Sistema de pago iniciado -------')
-
-
+// Callback que llama Mercado Pago después del pago
+// Recibe payment_id, status, merchant_order_id como query params
 const feedback = (req, res) => {
-	let info = {
-		Payment: req.query.payment_id,
-		Status: req.query.status,
-		MerchantOrder: req.query.merchant_order_id
-	}
-    console.log(info)
+    const info = {
+        Payment: req.query.payment_id,
+        Status: req.query.status,
+        MerchantOrder: req.query.merchant_order_id,
+    }
+    console.log("MP Feedback:", info)
 
-    res.redirect('/')
+    // Redirige a la vista de resultado con el estado del pago
+    res.redirect(`/vistas/pago.html?status=${info.Status}`)
 }
 
 export default {
-    feedback
+    feedback,
 }

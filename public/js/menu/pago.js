@@ -1,5 +1,7 @@
-// Agrega credenciales de SDK
-const mercadopago = new MercadoPago("APP_USR-9172024a-cdc0-4625-bb87-67fdee2df451", {
+// PUBLIC KEY de Mercado Pago (NO es el access token — esta clave es pública y va en el cliente)
+// ⚠️  REEMPLAZÁ este valor con tu PUBLIC KEY de producción desde:
+//     https://www.mercadopago.com.ar/developers/panel/credentials
+const mercadopago = new MercadoPago("APP_USR-34a75f43-e42c-427d-bd71-276eaac84d93", {
     locale: "es-AR",
 });
 
@@ -10,6 +12,7 @@ async function renderPago(preference) {
 
     document.querySelector('.section-carrito').classList.remove('section-carrito--open')
     document.querySelector('main').style.display = 'none'
+    document.querySelector('footer').style.display = 'none'
     document.querySelector('.section-pago').innerHTML = html
 
     createCheckoutButton(preference.id)
@@ -38,6 +41,7 @@ async function renderPago(preference) {
     // Go back
     document.getElementById("go-back").addEventListener("click", function () {
         document.querySelector('main').style.display = 'block'
+        document.querySelector('footer').style.display = ''
         document.querySelector('.section-pago').innerHTML = ''
     });
 }
