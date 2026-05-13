@@ -1,7 +1,9 @@
 
 class Main {
-    async ajax(url, metodo='get') {    // argumentos con valores por default
-        return await fetch(url, { method: metodo }).then(r => r.text())
+    async ajax(url, metodo='get') {
+        const r = await fetch(url, { method: metodo })
+        if (!r.ok) throw new Error(`HTTP ${r.status} cargando ${url}`)
+        return r.text()
     }
 
     getNombreArchivo(id) {
@@ -9,80 +11,49 @@ class Main {
     }
 
     marcarLink(id) {
-        let links = document.querySelectorAll('header nav a')
-        links.forEach( link => {
-            if(link.id == id) link.classList.add('active')
-            else link.classList.remove('active')
+        document.querySelectorAll('header nav a').forEach(link => {
+            link.classList.toggle('active', link.id === id || link.id === id + '-mob')
         })
     }
 
     initJS(id) {
-        if(id == 'alta') {
-            initAlta()
-        }
-        else if(id == 'inicio') {
-            initInicio()
-            scrollEfect()
-        }
-        else if(id == 'nosotros') {
-            initNosotros()             
-        }
-        else if(id == 'contacto') {
-            initContacto()
-        }
+        if (id === 'alta')     initAlta()
+        else if (id === 'inicio')  { initInicio(); scrollEfect() }
+        else if (id === 'nosotros') initNosotros()
+        else if (id === 'contacto') initContacto()
     }
 
     async cargarPlantilla(id) {
-        let archivo = this.getNombreArchivo(id)
-
-        let plantilla = await this.ajax(archivo)
-        let main = document.querySelector('main')
-        main.innerHTML = plantilla
-
-        this.initJS(id)
-
-        // Re-render Lucide icons injected by the new view
-        if (typeof lucide !== 'undefined') lucide.createIcons()
+        try {
+            const plantilla = await this.ajax(this.getNombreArchivo(id))
+            document.querySelector('main').innerHTML = plantilla
+            this.initJS(id)
+            if (typeof lucide !== 'undefined') lucide.createIcons()
+        } catch (err) {
+            console.error('[main] Error cargando vista:', id, err)
+        }
     }
 
     async cargarPlantillas() {
-        /* --------------------------------------------------------- */
-        /* Carga inicial de la vista determinada por la url visitada */
-        /* --------------------------------------------------------- */
-        let id = location.hash.slice(1) || 'inicio'
+        // Registrar hashchange ANTES de cualquier await
+        // Los links con href="#seccion" cambian el hash de forma nativa,
+        // esto dispara hashchange sin necesidad de click handlers JS.
+        window.addEventListener('hashchange', () => {
+            const id = location.hash.slice(1) || 'inicio'
+            this.marcarLink(id)
+            this.cargarPlantilla(id)
+        })
+
+        // Carga inicial según la URL actual
+        const id = location.hash.slice(1) || 'inicio'
         this.marcarLink(id)
         await this.cargarPlantilla(id)
-
-        /* ------------------------------------------------------------- */
-        /* Carga de cada uno de los contenidos según la navegación local */
-        /* ------------------------------------------------------------- */
-        let links = document.querySelectorAll('header nav a')
-        //console.log(links)
-
-        links.forEach(link => {
-            link.addEventListener('click', e => {
-                e.preventDefault()
-
-                let id = link.id
-                //console.log(id)
-                location.hash = id
-            })
-        })
-
-        window.addEventListener('hashchange', async () => {
-            //console.log('Cambió la URL')
-
-            let id = location.hash.slice(1) || 'inicio'
-            this.marcarLink(id)
-            await this.cargarPlantilla(id)
-        })
     }
 
     async start() {
         await this.cargarPlantillas()
     }
 }
-
 
 const main = new Main()
 main.start()
