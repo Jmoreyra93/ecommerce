@@ -1,12 +1,12 @@
-﻿<!-- â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• ADMIN PANEL â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+<!-- ════════════════════════════════════ ADMIN PANEL ══════════════════ -->
 <section class="min-h-screen bg-gray-50 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <!-- Page header -->
         <div class="mb-10">
-            <p class="text-gray-400 text-xs font-medium tracking-widest uppercase mb-2">Panel de administraciÃ³n</p>
-            <h1 class="text-gray-900 text-3xl font-bold" id="titulo-alta">GestiÃ³n de productos</h1>
-            <p class="text-gray-500 text-sm mt-1">AgregÃ¡, editÃ¡ o eliminÃ¡ productos del catÃ¡logo.</p>
+            <p class="text-gray-400 text-xs font-medium tracking-widest uppercase mb-2">Panel de administración</p>
+            <h1 class="text-gray-900 text-3xl font-bold" id="titulo-alta">Gestión de productos</h1>
+            <p class="text-gray-500 text-sm mt-1">Agregá, editá o eliminá productos del catálogo.</p>
         </div>
 
         <!-- Toast message -->
@@ -18,7 +18,7 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
 
-            <!-- â”€â”€ LEFT: Add product form â”€â”€ -->
+            <!-- ── LEFT: Add product form ── -->
             <div class="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
                 <h2 class="text-gray-900 font-semibold text-lg mb-6 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
@@ -62,9 +62,9 @@
                         <div class="msg-validation text-red-500 text-xs mt-1" style="display:none"></div>
                     </div>
 
-                    <!-- CategorÃ­a -->
+                    <!-- Categoría -->
                     <div>
-                        <label for="categoria" class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">CategorÃ­a</label>
+                        <label for="categoria" class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">Categoría</label>
                         <input class="data-validation w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all placeholder:text-gray-400"
                             id="categoria" type="text" placeholder="Ej: Smartphones, Notebooks">
                         <div class="msg-validation text-red-500 text-xs mt-1" style="display:none"></div>
@@ -74,7 +74,7 @@
                     <div>
                         <label for="detalles" class="block text-xs font-semibold text-gray-600 uppercase tracking-wider mb-1.5">Detalles</label>
                         <input class="data-validation w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-900 transition-all placeholder:text-gray-400"
-                            id="detalles" type="text" placeholder="DescripciÃ³n breve del producto">
+                            id="detalles" type="text" placeholder="Descripción breve del producto">
                         <div class="msg-validation text-red-500 text-xs mt-1" style="display:none"></div>
                     </div>
 
@@ -84,7 +84,7 @@
                         <div id="drop-area"
                             class="border-2 border-dashed border-gray-200 rounded-2xl p-8 text-center transition-all duration-200 cursor-pointer hover:border-gray-400">
                             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" class="mx-auto text-gray-400 mb-3"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                            <p class="text-gray-500 text-sm mb-3">ArrastrÃ¡ una imagen aquÃ­ o hacÃ© click para seleccionar</p>
+                            <p class="text-gray-500 text-sm mb-3">Arrastrá una imagen aquí o hacé click para seleccionar</p>
 
                             <input id="foto" type="file" accept="image/*"
                                 class="hidden"
@@ -105,7 +105,7 @@
                         </div>
                     </div>
 
-                    <!-- EnvÃ­o -->
+                    <!-- Envío -->
                     <div class="flex items-center gap-3">
                         <div class="relative inline-flex">
                             <input class="data-validation sr-only peer" id="envio" type="checkbox">
@@ -114,7 +114,7 @@
                                        after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-transform peer-checked:after:translate-x-5">
                             </label>
                         </div>
-                        <label for="envio" class="text-sm text-gray-700 font-medium cursor-pointer select-none">EnvÃ­o gratis disponible</label>
+                        <label for="envio" class="text-sm text-gray-700 font-medium cursor-pointer select-none">Envío gratis disponible</label>
                     </div>
 
                     <!-- Submit button -->
@@ -126,7 +126,7 @@
                 </form>
             </div>
 
-            <!-- â”€â”€ RIGHT: Product list â”€â”€ -->
+            <!-- ── RIGHT: Product list ── -->
             <div class="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
                 <h2 class="text-gray-900 font-semibold text-lg mb-6 flex items-center gap-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
@@ -139,4 +139,3 @@
         </div>
     </div>
 </section>
-

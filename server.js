@@ -11,7 +11,13 @@ Mongo_DB.conectarDB()
 
 const app = express()
 
-app.use(express.static('public'))
+app.use(express.static('public', {
+    setHeaders(res, filePath) {
+        if (filePath.endsWith('.html')) {
+            res.setHeader('Content-Type', 'text/html; charset=utf-8')
+        }
+    }
+}))
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 
