@@ -17,7 +17,6 @@ async function renderPago(preference) {
     // Validar que la preferencia es válida antes de continuar
     if (!preference || !preference.id || !preference.items) {
         console.error('[pago] Preferencia inválida:', preference)
-        alert('Hubo un error al crear el pago. Por favor intentá de nuevo.')
         return
     }
 

@@ -44,20 +44,34 @@ class CarritoController extends CarritoModel {
     async enviarCarrito() {
         var elemSectionCarrito = document.getElementsByClassName('section-carrito')[0]
 
-        elemSectionCarrito.innerHTML = '<h2>Enviando a pasarela de pago...</h2>'
-        let preference = await carritoService.guardarCarritoService(this.carrito)
-        this.carrito = []
-        localStorage.setItem('carrito',this.carrito)
-    
-        elemSectionCarrito.innerHTML = '<h2>Pasarela de pago... <b>OK!</b></h2>'
-    
-        setTimeout( async () => {
-            elemSectionCarrito.classList.remove('section-carrito--visible')
-        elemSectionCarrito.classList.remove('section-carrito--open')
-            console.log(preference)
-            await renderPago(preference)
-        },0)
+        // Mostrar estado de carga
+        elemSectionCarrito.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-64 gap-4 px-8 text-center">
+                <div class="w-10 h-10 border-2 border-gray-900 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-gray-600 text-sm font-medium">Procesando pago...</p>
+            </div>`
 
+        try {
+            let preference = await carritoService.guardarCarritoService(this.carrito)
+
+            // Verificar que la respuesta es válida antes de limpiar el carrito
+            if (!preference || !preference.id) {
+                throw new Error('Preferencia de pago inválida')
+            }
+
+            this.carrito = []
+            localStorage.setItem('carrito', JSON.stringify(this.carrito))
+            actualizarCartBadge()
+
+            elemSectionCarrito.classList.remove('section-carrito--open')
+            await renderPago(preference)
+
+        } catch (err) {
+            console.error('[carrito] Error al enviar carrito:', err)
+            // Restaurar el carrito en pantalla si falló
+            await renderTablaCarrito(this.carrito)
+            alert('Hubo un error al procesar el pago. Por favor intentá de nuevo.')
+        }
     }
 }
 
