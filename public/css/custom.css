@@ -78,7 +78,8 @@ header nav a.active::after {
 .section-carrito::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
 
 /* ── Payment section (shown by pago.js, starts empty — no height until JS injects content) ── */
-.section-pago { padding-top: 4rem; }
+/* :empty oculta la div del flow normal cuando está vacía para que no genere barra blanca */
+.section-pago:empty { display: none; }
 
 /* ── Product Card Image (background-image set inline by HBS) ── */
 .card__image {

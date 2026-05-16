@@ -76,19 +76,6 @@
     </p>
 </div>
 
-<script>
-    // Calcular total del carrito para mostrar en el panel
-    ;(function() {
-        const items = document.querySelectorAll('.section-carrito .flex.items-center.gap-4')
-        // Total viene del carritoController
-        try {
-            const total = carritoController.carrito.reduce((sum, p) => sum + (Number(p.precio) * Number(p.cantidad)), 0)
-            const el = document.getElementById('cart-total')
-            if (el) el.textContent = total.toLocaleString('es-AR')
-        } catch(e) {}
-    })()
-</script>
-
 {{else}}
 
 <!-- Empty cart state -->

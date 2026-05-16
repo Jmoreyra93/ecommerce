@@ -16,6 +16,7 @@ async function renderPlantillaListado(listado) {
 
 function agregarCarrito(e,id,ref) {
     e.preventDefault()
+    e.stopPropagation()  // evita que el click burbujee hacia el <a> padre y se agregue dos veces
 
     let producto = productoController.productos.find( producto => producto.id == id )
     carritoController.agregarAlCarrito(producto)

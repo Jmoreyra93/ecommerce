@@ -25,6 +25,14 @@ class Main {
 
     async cargarPlantilla(id) {
         try {
+            // Si el usuario navega estando en la vista de pago, restaurar el layout normal
+            const seccionPago = document.querySelector('.section-pago')
+            if (seccionPago && seccionPago.innerHTML.trim()) {
+                seccionPago.innerHTML = ''
+                document.querySelector('main').style.display = ''
+                document.querySelector('footer').style.display = ''
+            }
+
             const plantilla = await this.ajax(this.getNombreArchivo(id))
             document.querySelector('main').innerHTML = plantilla
             this.initJS(id)

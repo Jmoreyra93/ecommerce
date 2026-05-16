@@ -7,13 +7,30 @@ const mercadopago = new MercadoPago("APP_USR-34a75f43-e42c-427d-bd71-276eaac84d9
 
 console.warn('--- Sistema de pago MP iniciado ---')
 
+function volverAlInicio() {
+    document.querySelector('main').style.display = ''
+    document.querySelector('footer').style.display = ''
+    document.querySelector('.section-pago').innerHTML = ''
+}
+
 async function renderPago(preference) {
+    // Validar que la preferencia es válida antes de continuar
+    if (!preference || !preference.id || !preference.items) {
+        console.error('[pago] Preferencia inválida:', preference)
+        alert('Hubo un error al crear el pago. Por favor intentá de nuevo.')
+        return
+    }
+
     let html = await fetch('vistas/pago.html').then(r => r.text())
 
     document.querySelector('.section-carrito').classList.remove('section-carrito--open')
     document.querySelector('main').style.display = 'none'
     document.querySelector('footer').style.display = 'none'
     document.querySelector('.section-pago').innerHTML = html
+
+    // Adjuntar listener del botón volver (el HTML ya fue inyectado)
+    const btnVolver = document.getElementById('go-back')
+    if (btnVolver) btnVolver.addEventListener('click', volverAlInicio)
 
     createCheckoutButton(preference.id)
 
@@ -22,28 +39,20 @@ async function renderPago(preference) {
     const items = preference.items
     let total = 0
 
-    for(let i=0; i<items.length; i++) {
-        let price = items[i].unit_price
-        let quantity = items[i].quantity
-        let title = items[i].title
-
-        let subtotal = price * quantity
+    for (let i = 0; i < items.length; i++) {
+        const price    = items[i].unit_price
+        const quantity = items[i].quantity
+        const title    = items[i].title
+        const subtotal = price * quantity
         total += subtotal
 
         refItems.innerHTML += `
-            <span class="price summary-price">$ ${subtotal}</span>
-            <p class="item-name">${title} x unidad/es <span class="summary-quantity">$ ${quantity}</span></p>
+            <span class="price summary-price">$ ${subtotal.toLocaleString('es-AR')}</span>
+            <p class="item-name">${title} <span class="summary-quantity">×${quantity}</span></p>
         `
     }
 
-    refTotal.innerHTML = total
-
-    // Go back
-    document.getElementById("go-back").addEventListener("click", function () {
-        document.querySelector('main').style.display = 'block'
-        document.querySelector('footer').style.display = ''
-        document.querySelector('.section-pago').innerHTML = ''
-    });
+    refTotal.textContent = total.toLocaleString('es-AR')
 }
 
 
