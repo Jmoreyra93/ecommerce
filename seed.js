@@ -1,5 +1,5 @@
 /**
- * seed.js — carga 10 productos de ejemplo en la base de datos.
+ * seed.js — limpia la base de datos y carga 10 productos de ejemplo.
  * Requiere que el servidor esté corriendo.
  *
  * Uso:
@@ -112,8 +112,21 @@ const productos = [
     }
 ]
 
+async function clearAll() {
+    console.log('Eliminando productos existentes...')
+    const res = await fetch(`${BASE_URL}/api/productos`)
+    const existentes = await res.json()
+    for (const p of existentes) {
+        const id = p.id || p._id
+        await fetch(`${BASE_URL}/api/productos/${id}`, { method: 'DELETE' })
+        process.stdout.write('.')
+    }
+    console.log(`\nEliminados: ${existentes.length} productos\n`)
+}
+
 async function seed() {
-    console.log(`Seeding ${productos.length} productos en ${BASE_URL}...\n`)
+    await clearAll()
+    console.log(`Insertando ${productos.length} productos en ${BASE_URL}...\n`)
     let ok = 0
     let fail = 0
 
