@@ -25,6 +25,18 @@ app.use('/api/productos', routerProductos)
 app.use('/api/carrito', routerCarrito)
 app.use('/upload', routerUpload)
 
+// Endpoint temporal de diagnóstico — muestra estado de la conexión MongoDB
+app.get('/api/status', (req, res) => {
+    res.json({
+        tipo: config.TIPO_DE_PERSISTENCIA,
+        mongoUri_set: !!config.STR_CNX,
+        mongoUri_preview: config.STR_CNX ? config.STR_CNX.slice(0, 40) + '...' : null,
+        mongo_conectado: Mongo_DB.conexionOk,
+        node_version: process.version,
+        env: process.env.NODE_ENV || 'no seteado'
+    })
+})
+
 
 console.log('-----------------------------------------')
 console.log('process.env.PORT:', process.env.PORT)
