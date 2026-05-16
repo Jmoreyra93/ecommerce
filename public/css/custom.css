@@ -12,7 +12,7 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: 'Space Grotesk', sans-serif;
-    background: #fff;
+    background: #030712; /* bg-gray-950 — evita barra blanca mientras carga el hero oscuro */
     color: #111;
     overflow-x: hidden;
 }
@@ -77,9 +77,9 @@ header nav a.active::after {
 .section-carrito::-webkit-scrollbar-track { background: #f8f8f8; }
 .section-carrito::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
 
-/* ── Payment section (shown by pago.js, starts empty — no height until JS injects content) ── */
-/* :empty oculta la div del flow normal cuando está vacía para que no genere barra blanca */
-.section-pago:empty { display: none; }
+/* ── Payment section (shown by pago.js, starts empty — hidden until JS injects content) ── */
+.section-pago { display: none; }
+.section-pago.active { display: block; }
 
 /* ── Product Card Image (background-image set inline by HBS) ── */
 .card__image {
@@ -204,4 +204,25 @@ header nav a.active::after {
     background: #111;
     color: #fff;
     border-color: #111;
+}
+
+/* ── Pago: estilos para items inyectados por pago.js ────────────── */
+/* Movidos desde pago.html para evitar bloqueo por Content Security Policy */
+.item .price {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.1rem;
+}
+.item .item-name {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin: 0 0 0.75rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #f3f4f6;
+}
+.item .summary-quantity {
+    font-weight: 600;
+    color: #374151;
 }

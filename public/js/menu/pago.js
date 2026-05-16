@@ -8,9 +8,11 @@ const mercadopago = new MercadoPago("APP_USR-34a75f43-e42c-427d-bd71-276eaac84d9
 console.warn('--- Sistema de pago MP iniciado ---')
 
 function volverAlInicio() {
+    const secPago = document.querySelector('.section-pago')
+    secPago.innerHTML = ''
+    secPago.classList.remove('active')
     document.querySelector('main').style.display = ''
     document.querySelector('footer').style.display = ''
-    document.querySelector('.section-pago').innerHTML = ''
 }
 
 async function renderPago(preference) {
@@ -22,10 +24,12 @@ async function renderPago(preference) {
 
     let html = await fetch('vistas/pago.html').then(r => r.text())
 
+    const secPago = document.querySelector('.section-pago')
     document.querySelector('.section-carrito').classList.remove('section-carrito--open')
     document.querySelector('main').style.display = 'none'
     document.querySelector('footer').style.display = 'none'
-    document.querySelector('.section-pago').innerHTML = html
+    secPago.innerHTML = html
+    secPago.classList.add('active')   // hace visible la sección de pago
 
     // Adjuntar listener del botón volver (el HTML ya fue inyectado)
     const btnVolver = document.getElementById('go-back')
